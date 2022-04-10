@@ -43,7 +43,7 @@ apt-get dist-upgrade -y --no-install-recommends -o Dpkg::Options::="--force-conf
 ## Fix locale.
 case $(lsb_release -is) in
   Ubuntu)
-    $minimal_apt_get_install language-pack-en
+    $minimal_apt_get_install language-pack-ru-base language-pack-en-base
     ;;
   Debian)
     $minimal_apt_get_install locales locales-all
@@ -51,7 +51,15 @@ case $(lsb_release -is) in
   *)
     ;;
 esac
-locale-gen en_US
-update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-echo -n en_US.UTF-8 > /etc/container_environment/LANG
-echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+locale-gen --purge en_US.UTF-8 ru_RU.UTF-8
+update-locale --reset LANG=ru_RU.UTF-8 LC_ALL=ru_RU.UTF-8 LANGUAGE=ru_RU:en
+echo -n ru_RU.UTF-8 > /etc/container_environment/LANG
+echo -n ru_RU.UTF-8 > /etc/container_environment/LC_CTYPE
+
+## Fix timezone
+export TZ=Europe/Moscow
+$minimal_apt_get_install tzdata
+echo $TZ > /etc/timezone && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
+
+## Some packages
+$minimal_apt_get_install ssh-import-id bash-completion mc htop strace lsof bzip2 xz-utils

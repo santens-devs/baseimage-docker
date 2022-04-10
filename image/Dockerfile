@@ -6,14 +6,17 @@ ARG QEMU_ARCH
 
 COPY . /bd_build
 
-RUN /bd_build/prepare.sh && \
-	/bd_build/system_services.sh && \
-	/bd_build/utilities.sh && \
-	/bd_build/cleanup.sh
+RUN /bd_build/prepare.sh \
+ && /bd_build/system_services.sh \
+ && /bd_build/utilities.sh \
+ && /bd_build/cleanup.sh \
+ && rm -f /etc/service/sshd/down \
+ && /usr/sbin/enable_insecure_key
 
 ENV DEBIAN_FRONTEND="teletype" \
-    LANG="en_US.UTF-8" \
-    LANGUAGE="en_US:en" \
-    LC_ALL="en_US.UTF-8"
+    LANG="ru_RU.UTF-8" \
+    LANGUAGE="ru_RU:en" \
+    LC_ALL="ru_RU.UTF-8" \
+    TZ="Europe/Moscow"
 
 CMD ["/sbin/my_init"]
