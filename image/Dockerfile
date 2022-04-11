@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=ubuntu:20.04
 FROM $BASE_IMAGE
-LABEL org.opencontainers.image.source = https://github.com/santens-devs/baseimage-docker
+LABEL org.opencontainers.image.source https://github.com/santens-devs/baseimage-docker
 
 ARG QEMU_ARCH
 #ADD x86_64_qemu-${QEMU_ARCH}-static.tar.gz /usr/bin
