@@ -2,10 +2,10 @@ VERSION ?= focal
 ifdef BASE_IMAGE
 	BUILD_ARG = --build-arg BASE_IMAGE=$(BASE_IMAGE)
 	ifndef NAME
-		NAME = albus/baseimage-$(subst :,-,${BASE_IMAGE})
+		NAME = ghcr.io/santens-devs/baseimage-$(subst :,-,${BASE_IMAGE})
 	endif
 else
-	NAME ?= albus/baseimage
+	NAME ?= ghcr.io/santens-devs/baseimage
 endif
 ifdef TAG_ARCH
 	# VERSION_ARG = $(VERSION)-$(subst /,-,$(subst :,-,${BASE_IMAGE}))-$(TAG_ARCH)
